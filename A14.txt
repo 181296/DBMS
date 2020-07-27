@@ -1,0 +1,14 @@
+Assignment - 14
+
+
+1. Write a command that puts the following values, in their given order, into the salespeople table: city – San Jose, name – Blanco, comm – NULL, cnum – 1100.
+	Insert into Salespeople Value (Snum = 1100, Sname = 'Blanco', City = 'San Jose', Commm = NULL);
+    
+2. Write a command that removes all orders from customer Clemens from the Orders table.
+	Delete from Orders where Cnum = (Select Cnum from Customers where Cname = 'Clements');
+
+3. Write a command that increases the rating of all customers in Rome by 100.
+	Update Customers set Rating = Rating + 100 where City = 'Rome';
+    
+4. Salesperson Serres has left the company. Assign her customers to Motika.
+	Update Orders set Snum = (Select Snum from Salespeople where Sname = 'Motika') where Snum = (Select Snum from Salespeople where Sname = 'Seres') ;
