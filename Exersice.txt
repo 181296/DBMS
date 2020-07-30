@@ -1,0 +1,156 @@
+/*
+Exercise 1 and 2
+
+5. Select * from SUPPLIER;
+
+6.Select `S#`, Sname from SUPPLIER;
+
+7.Select Pname, color from Parts where City="London";
+8.Select * from Supplier where City="London";
+
+9.Select * from SUPPLIER where City="Paris" OR City="Athens"; 
+
+10.Select * from projects where city="Athens"
+
+11.Select Pname from PARTS where weight >= 12 and weight <=14;
+
+12.select * from supplier where `Status`>=20;
+
+13.select * from supplier where  city <> "London";
+
+14.select city from supplier;
+
+15.Select weight10 as "MILIGRAMS" weight/1000 as"KILOGRAMS" from PARTS; 
+
+
+Exercise - 3
+
+1. Display all the Supplier names with the initial letter capital.
+
+2. Display all the Supplier names in upper case.
+	Select upper(sname) from supplier;
+
+3. Display all the Supplier names in lower case.
+	Select lower(sname) from supplier;
+    
+4. Display all the Supplier names padded to 25 characters, with spaces on the left.
+	Select lpad(sname,25,' ') from Supplier;
+    
+5. Display all the Supplier names (with ‘la’ replaced by ‘ro’).
+	HINT: REPLACE.
+    Select replace(sname,'la','ro') from Supplier;
+
+6. Implement the above command such that ‘l’ is replaced with ‘r’ and ‘a’ is replaced with ‘o’.
+	Select translate(sname,'la','ro') from supplier;
+    
+7. Display the Supplier names and the lengths of the names.
+	Select sname , length(sname) from Supplier;
+    
+8. Use the soundex function to search for a supplier by the name of ‘BLOKE’.
+	Select sname from Supplier where soundex(sname) = soundex('BLOKE');
+    
+9. Display the Supplier name and the status (as Ten, Twenty, Thirty, etc.).
+	
+10. Display the current day (e.g. Thursday).
+
+Exercise - 4
+
+
+ -Display name as center justifier.
+  Select concat(lpad('',(40-length(sname))/2,'*'),sname,
+	rpad('',(40-length(sname))/2,'*')) from supplier;
+
+ -Diaplay AMIT as MT.
+	SELECT sname,
+		replace(
+		replace(
+		replace(
+		replace(
+		replace(
+			sname,'a','')
+				,'e','')
+				,'i','') 
+				,'u','') 
+				,'o','') 
+			as codedname
+	FROM supplier;
+    
+ -write a query to fetch only odd rows.  
+  SELECT *
+	FROM (
+		  SELECT *, @rowNumber := @rowNumber+ 1 rn
+		  FROM supplier
+		  JOIN (SELECT @rowNumber:= 0) r
+		 ) t 
+	WHERE rn % 2 = 1;
+
+ -Write a query to find details of customers whoes name is not liu and pereira.
+	Select cname from customers where cname not in ('liu','pereira');
+
+Exercise - 5
+
+1. Display the Supplier name and the Quantity sold.
+	Select Sname, QTY from Suppliers_parts_projects, Supplier where Supplier.`S#` = suppliers_parts_projects.`S#`;
+
+2. Display the Part name and Quantity sold.
+	Select Pname, QTY from Suppliers_parts_projects, Parts where Parts.`P#` = suppliers_parts_projects.`P#`;
+
+3. Display the Project name and Quantity sold.
+	Select Jname, QTY from Suppliers_parts_projects, Projects where Projects.`J#` = suppliers_parts_projects.`J#`;
+
+4. Display the Supplier name, Part name, Project name and Quantity sold.
+	Select Sname, Pname, Jname, Qty Quantity from Supplier, Parts, Projects, Suppliers_parts_projects where 
+		Supplier.`S#` =  Suppliers_Parts_Projects.`S#` and
+		Parts.`P#` = Suppliers_Parts_Projects.`P#`and
+		Projects.`J#` = Suppliers_Parts_Projects.`J#`;
+
+5. Display the Supplier name, Supplying Parts to a Project in the same City.
+	
+    
+6. Display the Part name that is ‘Red’ is color, and the Quantity sold.
+	Select Pname, Qty from Parts, suppliers_parts_projects where Parts.`P#` = suppliers_parts_projects.`P#` and color = 'Red';
+
+7. Display all the Quantity sold by Suppliers with the Status = 20.
+	Select Qty from suppliers_parts_projects, Supplier where suppliers_parts_projects.`S#` = Supplier.`S#` and Status = 20; 
+
+8. Display all the Parts and Quantity with a Weight > 14.
+	Select * from Parts, suppliers_parts_projects where suppliers_parts_projects.`P#` = Parts.`P#`and Weight > 14;
+
+9. Display all the Project names and City, which has bought more than 500 Parts.
+	Select Jname, City from Projects, suppliers_parts_projects where suppliers_parts_projects.`J#` = Projects.`J#`and Qty > 500;
+    
+10. Display all the Part names and Quantity sold that have a Weight less than 15. 
+	Select Pname, Qty from Parts, suppliers_parts_projects where suppliers_parts_projects.`P#` = Parts.`P#` and Weight < 15;	
+
+Exercise - 6
+
+1. Display all the Suppliers with the same Status as the supplier, ‘CLARK’.
+	Select * from Supplier where Status = (Select Status from Supplier where Sname = 'Clark');
+
+2. Display all the Employees in the same department as the employee ‘MILLER’.
+	
+
+3. Display all the Parts which have more Weight than all the Red parts.
+	Select * from Parts where Weight > All (Select Weight from Parts where color = 'Red');
+
+4. Display all the Projects going on in the same city as the project ‘TAPE’.
+	Select * from Projects where city = (Select city from Projects where Jname = 'Tape');
+
+5. Display all the Parts with Weight less than all the Green parts.
+	Select * from  Parts where Weight < (Select Weight from Parts where color = 'Green');
+
+6. Display the name of the Supplier who has sold the maximum Quantity (in one sale).
+	Select Sname, max(Qty) MAX from Supplier,suppliers_parts_projects where suppliers_parts_projects.`S#` = Supplier.`S#` group by Sname;
+  
+8. Display the name of the Supplier who has sold the maximum overall Quantity (sum of Sales).
+	 Select Sname, max(Qty) MAX from Supplier, suppliers_parts_projects where suppliers_parts_projects.`S#` = Supplier.`S#` group by Sname;
+
+
+*/
+use Exe_3;
+Select * from suppliers_parts_projects;
+Select * from Parts;
+Select * from Supplier;
+Select * from Projects;
+-- Select Sname from Supplier where `S#` = (Select `S#` from Supplier, Parts, Projects where )
+
